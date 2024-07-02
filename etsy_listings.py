@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from etsy_shop_id import get_shop_id
+from etsy_initial_token import load_token
 from requests_oauthlib import OAuth2Session
 import requests
 import json
@@ -15,9 +16,8 @@ def token_saver(new_token):
     # Save the new token somewhere you can retrieve it later
     print("New token:", new_token)
 
-token = {'access_token': '879431180.e4at_iGAt16y44w0YFxTcMNn2u8r1Xg4gSbQqnZnoIQEF-RzdOsKZA__9wtzdSQWl2n4gT9QweTr7_ZCBgZzPBxIac', 'token_type': 'Bearer', 'expires_in': 3600, 'refresh_token': '879431180.IfHB7VLg_ZGffot3l31JiEKbScwS5r81HJjCCMs5UAuFUlwHEjs0EiczCidVp6HrHLNJg2pD0NTwLax-TfYJ9115-r', 'expires_at': 1719037222.0221074}
+token = load_token()
 shop_id = get_shop_id(etsy_keystring, token)
-
 
 def get_listings(keystring, token):
       
@@ -47,13 +47,13 @@ names = shorten(listings["results"][0]["title"])
 # Convert list of dictionaries to DataFrame
 listings_df = pd.DataFrame(listings['results'])
 
-print(listings_df.shape)
+# print(listings_df.shape)
 
 # Export DataFrame to CSV
 listings_file = 'listings.csv'
-listings_df.to_csv(listings_file, index=False)
+# listings_df.to_csv(listings_file, index=False)
 
-def get_transactions(keystring, token, limit=25):
+def get_transactions(keystring, token, limit=99):
       
     headers = {
 		"Accept": "application/json",
@@ -72,29 +72,14 @@ def get_transactions(keystring, token, limit=25):
 
 transactions = get_transactions(etsy_keystring, token, limit=99)
 
-# print(transactions["count"])
+print(transactions)
 
-# print(list(transactions["results"][0].keys()))
+# Convert list of dictionaries to DataFrame
+transactions_df = pd.DataFrame(transactions['results'])
 
+# print(listings_df.shape)
 
-# Let's try to find the most tags in the recent transactions
-# I will make the list of the count of the transactions.
+# Export DataFrame to CSV
+transactions_file = 'transactions.csv'
+transactions_df.to_csv(transactions_file, index=False)
 
-# First, we need to join the transactions dataset with the listings dataset. 
-# We need to find the join key. 
-
-
-
-
-# keys_to_print = ['title', "listing_id", "product_id", "price", "product_data"]
-# # Get the listing id and product id
-
-# print(transactions["results"][0])
-
-
-# count = 0
-# # Total profit
-# for transaction in transactions["results"]:
-#     count +=1
-
-# print(count)

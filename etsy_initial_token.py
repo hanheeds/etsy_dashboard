@@ -43,13 +43,13 @@ def load_token():
     if time.time() >= token_data['expires_at']:
         return None
     
-    return token_data['access_token']
+    return token_data
 
 
 
 if __name__ == "__main__":
     # This code will not run when the module is imported
-    print("This file is being run directly")
+    # print("This file is being run directly")
 
     load_dotenv()
 
@@ -66,4 +66,4 @@ if __name__ == "__main__":
     save_token(token)
 
     # save the token to json file to call it later
-
+    print('hi')
