@@ -58,12 +58,11 @@ if __name__ == "__main__":
     etsy_state = os.getenv("etsy-state")
     etsy_code_verifier = os.getenv("code-verifier")
     etsy_auth_code = os.getenv("etsy-code")
-    etsy_scope = ["transactions_w", "transactions_r"]
+    etsy_scope = ["transactions_w", "transactions_r", "listings_r", "listings_w"]
 
     token = get_access_token(etsy_keystring, etsy_auth_code, etsy_code_verifier, callback_url, etsy_scope)
     print(token)
-
+    
+    # save the token to json file to call it later
     save_token(token)
 
-    # save the token to json file to call it later
-    print('hi')
