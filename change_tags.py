@@ -19,31 +19,6 @@ def token_saver(new_token):
 token = load_token()
 shop_id = get_shop_id(etsy_keystring, token)
 
-def get_listings(keystring, token):
-      
-    headers = {
-		"Accept": "application/json",
-		"Content-Type": "application/x-www-form-urlencoded",
-		"x-api-key": keystring,
-    	      }
-    
-    refresh_url = "https://api.etsy.com/v3/public/oauth/token"
-    
-    etsy_auth = OAuth2Session(keystring, token=token, auto_refresh_url=refresh_url, token_updater=token_saver)
-    
-    r = etsy_auth.get(f"https://openapi.etsy.com/v3/application/shops/{shop_id}/listings/active", headers=headers)
-
-
-    return json.loads(r.text)
-
-listings = get_listings(etsy_keystring, token)
-
-listing_ids = []
-for i in range(len(listings["results"])):
-    listing_id = listings["results"][i]["listing_id"]
-    listing_ids.append(listing_id)
-
-
 new_tags = ["funny tshirt"]
 
 def update_tags(listing_id, new_tags):
@@ -70,9 +45,10 @@ def update_tags(listing_id, new_tags):
     else:
         print(f'Error: {response.status_code} - {response.text}')
 
+if __name__ == "__main__":
 
-listing_id = 1759375367
-new_tags = ['minecraft', 'minecraft shirt', 'minecraft warden', 'minecraft tshirt', 'minecraft teeshirt', 'minecraft birthday', 'minecrafter', 'minecraft merch', 'minecraft party', 'skeleton shirt', 'vintage shirt', 'minecraft lover gift', 'minecraft skeleton']
-# Example usage
-update_tags(listing_id, new_tags)
+    listing_id = 1759375367
+    new_tags = ['minecraft', 'minecraft shirt', 'minecraft warden', 'minecraft tshirt', 'minecraft teeshirt', 'minecraft birthday', 'minecrafter', 'minecraft merch', 'minecraft party', 'skeleton shirt', 'vintage shirt', 'minecraft lover gift', 'minecraft skeleton']
+    # Example usage
+    # update_tags(listing_id, new_tags)
 

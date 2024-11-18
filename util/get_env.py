@@ -13,3 +13,7 @@ def get_env_variables():
     etsy_auth_code = os.getenv("etsy-code")
 
     return etsy_keystring, etsy_auth_code, etsy_code_verifier, callback_url, etsy_state
+
+if __name__ == "__main__":
+    # This is how to use this function
+    etsy_keystring, etsy_authcode, etsy_code_verifier, callback_url, etsy_state = get_env_variables()

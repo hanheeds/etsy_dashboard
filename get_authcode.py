@@ -46,6 +46,7 @@ def get_etsylink(file_path):
     return link
 
 if __name__ == "__main__":
+    # Make a link to use
     make_etsylink()
     link = get_etsylink("etsy_auth.txt")
     print(link)

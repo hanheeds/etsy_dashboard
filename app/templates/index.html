@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+    <script src="../static/date.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="../static/graph.js"></script> -->
+  </head>
+  <body>
+    <h1 id="header">DTC Etsy Dashboard</h1>
+    <button id="changeTextBtn">Get updated data</button>
+    <p id="updatedDate">Updated <span id="currentDate"></span></p>
+
+    <script src="../static/graph.js"></script>
+    <div class="chart-container">
+      <h> Recent Transactions </h>
+      <canvas id="transactionChart" width="400" height="200"></canvas>
+    </div>
+  </body>
+</html>
