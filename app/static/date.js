@@ -5,6 +5,7 @@ function displayDate() {
     document.getElementById('currentDate').innerHTML = `${date} ${time}`;
   }
 
-  document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('changeTextBtn').addEventListener('click', displayDate);
-  });
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Call displayDate function immediately upon page load
+  displayDate();
+});

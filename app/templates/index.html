@@ -3,22 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Etsy Dashboard</title>
     <link rel="stylesheet" href="../static/styles.css" />
     <script src="../static/date.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- <script src="../static/graph.js"></script> -->
   </head>
   <body>
     <h1 id="header">DTC Etsy Dashboard</h1>
-    <button id="changeTextBtn">Get updated data</button>
     <p id="updatedDate">Updated <span id="currentDate"></span></p>
 
-    <script src="../static/graph.js"></script>
     <div class="chart-container">
       <h> Recent Transactions </h>
       <canvas id="transactionChart" width="400" height="200"></canvas>
     </div>
+
+    <div>
+      <h2>Listings Performance Listings</h2>
+      <table id="table" border="1">
+        <thead></thead>
+        <tbody>
+          <script src="../static/tables.js"></script>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Include the custom JavaScript for fetching and visualizing data -->
+    <!-- <script src="../static/graph.js"></script> -->
   </body>
 </html>

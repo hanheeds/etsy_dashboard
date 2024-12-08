@@ -1,0 +1,4 @@
+1. Current status. 
+I'm trying to pull both api and csv data. 
+I'm trying to visualize the tables.
+I'm doing this in flask_app.py

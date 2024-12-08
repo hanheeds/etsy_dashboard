@@ -1,8 +1,15 @@
 import requests
 import csv
 
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv() 
+printify_api = os.getenv("printify-api-key")
+
 # Replace with your Printify API token
-API_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzN2Q0YmQzMDM1ZmUxMWU5YTgwM2FiN2VlYjNjY2M5NyIsImp0aSI6IjkxNDA0MzUwMjQ5ODljMGRmYTZhZWE0OGJiMTYzY2VlYWUxNWI3ZTExZjRhMzE4OTAzMzlhZDdiZmQ2MjNlZmU5M2ExMTYwNWVhNmY1NWMxIiwiaWF0IjoxNzMxODkxOTUzLjU4NjgyMiwibmJmIjoxNzMxODkxOTUzLjU4NjgyNiwiZXhwIjoxNzYzNDI3OTUzLjU3NjgsInN1YiI6IjE2MzIxNzc5Iiwic2NvcGVzIjpbInNob3BzLm1hbmFnZSIsInNob3BzLnJlYWQiLCJjYXRhbG9nLnJlYWQiLCJvcmRlcnMucmVhZCIsIm9yZGVycy53cml0ZSIsInByb2R1Y3RzLnJlYWQiLCJwcm9kdWN0cy53cml0ZSIsIndlYmhvb2tzLnJlYWQiLCJ3ZWJob29rcy53cml0ZSIsInVwbG9hZHMucmVhZCIsInVwbG9hZHMud3JpdGUiLCJwcmludF9wcm92aWRlcnMucmVhZCIsInVzZXIuaW5mbyJdfQ.AqIfuCOCdk8oqzK1YGSPzxWsUHbBK8uTN852osYguWxNCPqoK2HBLfwqXFrsJN-I5UKLI1AzO6QPlJLAFDU'
+API_TOKEN = printify_api
 
 # Headers for authentication
 headers = {
@@ -28,26 +35,40 @@ def fetch_orders_page(shop_id, page):
     response.raise_for_status()
     return response.json()
 
+# Get the total number of pages
+def get_total_pages(shop_id):
+    response = fetch_orders_page(shop_id, 1)
+    total_records = response.get('total', 0)
+    per_page = len(response.get('data', []))  # Number of records per page
+
+    if per_page > 0:
+        total_pages = (total_records // per_page) + (1 if total_records % per_page != 0 else 0)
+    else:
+        total_pages = 1
+
+    return total_pages
+
 # Updated function to get all orders using parallel requests
 def get_orders(shop_id):
     # Get the first page to determine if there are more pages
     response = fetch_orders_page(shop_id, 1)
-    total_orders = response
+    total_orders = response.get('data',[])
+    # total_pages = get_total_pages(shop_id)
     page = 2
 
     # If there are no more pages, return the current result
-    if not response:
+    if not total_orders:
         return total_orders
 
     # Using ThreadPoolExecutor for parallel requests
     with concurrent.futures.ThreadPoolExecutor() as executor:
         future_to_page = {
-            executor.submit(fetch_orders_page, shop_id, i): i for i in range(2, 20)  # Fetch up to 20 pages concurrently; adjust as needed
+            executor.submit(fetch_orders_page, shop_id, i): i for i in range(2, 499)  # Fetch up to 20 pages concurrently; adjust as needed
         }
 
         for future in concurrent.futures.as_completed(future_to_page):
             try:
-                data = future.result()
+                data = future.result().get('data',[])
                 if data:
                     total_orders.extend(data)
                 else:
@@ -74,9 +95,9 @@ def save_orders_to_csv(shop_title, orders):
 import csv
 
 # Function to write all orders to a single CSV file
-def write_orders_to_csv(orders_data, sales_channel):
+def write_orders_to_csv(orders_data, sales_channel, shop_title):
     # Open CSV file for writing
-    filename=f'app/data/all_orders_{sales_channel}.csv'
+    filename=f'app/data/all_orders_{sales_channel}_{shop_title}.csv'
     with open(filename, mode='w', newline='', encoding='utf-8') as csv_file:
         writer = csv.writer(csv_file)
 
@@ -88,7 +109,7 @@ def write_orders_to_csv(orders_data, sales_channel):
         ])
 
         # Iterate over each order and write to the CSV
-        for order in orders_data['data']:
+        for order in orders_data:
             line_items = '; '.join([
                 f"{item['metadata']['title']} (Qty: {item['quantity']}, Variant: {item['metadata']['variant_label']})"
                 for item in order['line_items']
@@ -123,24 +144,16 @@ orders_data = {
 }
 
 
-
-
 # Main function to get shops and their orders, and save them as CSV files
 def main():
     shops = get_shops()
     for shop in shops:
+        print(shop['title'])
+        print('total pages: ')
+        print(get_total_pages(shop['id']))
         order_details = get_orders(shop['id'])
-        write_orders_to_csv(order_details)
-
+        write_orders_to_csv(order_details, shop['sales_channel'], shop['title'])
 
 # Run the script
 if __name__ == "__main__":
-    # main()
-    shops = get_shops()
-
-    count = 0
-    for shop in shops:
-        if count != 0: # we don't want the first sales channel because it has nothing
-            order_details = get_orders(shop['id'])
-            write_orders_to_csv(order_details, shop['sales_channel'])
-        count += 1
+    main()
