@@ -1,5 +1,4 @@
 // Fetch performance data
-// Fetch performance data
 fetch('/get_performance_data')
     .then(response => response.json())
     .then(data => {
@@ -7,7 +6,8 @@ fetch('/get_performance_data')
         console.log(performanceTables);
 
         // Wait for the DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function(){
+            // Ensure the container exists
             const container = document.getElementById('performance-tables');
             
             if (container) {
@@ -21,7 +21,7 @@ fetch('/get_performance_data')
                     tableHtml += '</tbody></table>';
                     container.innerHTML += tableHtml;
                 }
-
+                
                 // Initialize DataTables
                 $(document).ready(function () {
                     $('table.display').DataTable();
@@ -32,3 +32,4 @@ fetch('/get_performance_data')
         });
     })
     .catch(error => console.error('Error fetching data:', error));
+
