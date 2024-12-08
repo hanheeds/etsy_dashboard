@@ -2,7 +2,6 @@
 fetch('/get_performance_data')
     .then(response => response.json())
     .then(data => {
-        console.log('hi1');
         const performanceTables = data.performance_tables;
         console.log(performanceTables);
 
@@ -20,9 +19,7 @@ fetch('/get_performance_data')
 // Function to render performance tables
 function renderPerformanceTables(performanceTables) {
     const container = document.getElementById('performance-tables');
-    console.log('hi2');
     if (container) {
-        console.log('hi');
         // Loop through the performance tables and append them to the container
         for (const [key, rows] of Object.entries(performanceTables)) {
             let tableHtml = `<h2>${key.replace('_', ' ').toUpperCase()}</h2>`;
