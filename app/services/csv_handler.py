@@ -1,6 +1,17 @@
 import pandas as pd
 import os
 from flask import Flask, jsonify
+import math
+
+def convert_nan_to_null(data):
+    if isinstance(data, dict):  # If the data is a dictionary
+        return {key: convert_nan_to_null(value) for key, value in data.items()}
+    elif isinstance(data, list):  # If the data is a list
+        return [convert_nan_to_null(item) for item in data]
+    elif isinstance(data, float) and math.isnan(data):  # If the value is NaN
+        return None
+    else:
+        return data
 
 def process_performance_tables(listings_csv_path):
     """
@@ -39,4 +50,4 @@ def process_performance_tables(listings_csv_path):
 if __name__ == '__main__':
     print(os.getcwd())
     performance_tables = process_performance_tables('app/data/listings.csv')
-    print(jsonify({'performance_tables': performance_tables}))
+    print(performance_tables['good_performing'].keys())
