@@ -19,7 +19,7 @@ def token_saver(new_token):
 token = load_token()
 shop_id = get_shop_id(etsy_keystring, token)
 
-new_tags = ["funny tshirt"]
+# new_tags = ["funny tshirt"]
 
 def update_tags(listing_id, new_tags):
       
@@ -47,8 +47,9 @@ def update_tags(listing_id, new_tags):
 
 if __name__ == "__main__":
 
-    listing_id = 1759375367
+    listing_id = 1633310510
     new_tags = ['minecraft', 'minecraft shirt', 'minecraft warden', 'minecraft tshirt', 'minecraft teeshirt', 'minecraft birthday', 'minecrafter', 'minecraft merch', 'minecraft party', 'skeleton shirt', 'vintage shirt', 'minecraft lover gift', 'minecraft skeleton']
     # Example usage
-    # update_tags(listing_id, new_tags)
+    update_tags(listing_id, new_tags)
+    
 

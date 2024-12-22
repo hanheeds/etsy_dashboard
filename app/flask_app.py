@@ -19,11 +19,12 @@ def get_performance_data():
 
         # Validate that the listings.csv file exists
         listings_csv_path = os.path.join(data_folder, 'listings.csv')
+        transactions_csv_path = os.path.join(data_folder, 'transactions.csv')
         if not os.path.exists(listings_csv_path):
             return jsonify({'error': 'Listings file not found'}), 404
 
         # Process performance tables
-        performance_tables = process_performance_tables(listings_csv_path)
+        performance_tables = process_performance_tables(listings_csv_path, transactions_csv_path)
         performance_tables = convert_nan_to_null(performance_tables)
 
         # Return only the performance tables

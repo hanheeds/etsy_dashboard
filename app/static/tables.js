@@ -23,9 +23,9 @@ function renderPerformanceTables(performanceTables) {
         // Loop through the performance tables and append them to the container
         for (const [key, rows] of Object.entries(performanceTables)) {
             let tableHtml = `<h2>${key.replace('_', ' ').toUpperCase()}</h2>`;
-            tableHtml += '<table id="' + key + '" class="display"><thead><tr><th>Title</th><th>Num Favorers</th></tr></thead><tbody>';
+            tableHtml += '<table id="' + key + '" class="display"><thead><tr><th>Title</th><th>Sales</th><th>Favorites</th><th>Views</th><th>Tags</th><th>Conversion Rate</th></tr></thead><tbody>';
             rows.forEach(row => {
-                tableHtml += `<tr><td>${row.title}</td><td>${row.num_favorers}</td></tr>`;
+                tableHtml += `<tr><td>${row.title}</td><td>${row.num_sales}</td><td>${row.num_favorers}</td><td>${row.views}</td><td>${row.tags}</td><td>${row.conversion_rate}</td></tr>`;
             });
             tableHtml += '</tbody></table>';
             container.innerHTML += tableHtml;

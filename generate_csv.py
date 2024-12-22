@@ -86,7 +86,7 @@ def generate_listings_csv():
     listings_df = pd.DataFrame(listings)
     
     # Export DataFrame to CSV
-    listings_file = 'data/listings.csv'
+    listings_file = 'app/data/listings.csv'
     listings_df.to_csv(listings_file, index=False)
 
     print('Updated listings successfully!')
@@ -138,7 +138,7 @@ def generate_transactions_csv():
     transactions_df = pd.DataFrame(transactions)
 
     # Export DataFrame to CSV
-    transactions_file = 'data/transactions.csv'
+    transactions_file = 'app/data/transactions.csv'
     transactions_df.to_csv(transactions_file, index=False)
 
     print('Updated transactions successfully!')
