@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finances</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <!-- Logo linking to homepage -->
+      <a href="/">
+        <img src="../static/logo.png" alt="Company Logo" />
+      </a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/other-page">Finances</a>
+      </nav>
+    </header>
+    <div>
+      <h2>Pivot Table</h2>
+      <table id="pivotTable" class="display">
+        <thead>
+          <tr>
+            <!-- Add headers dynamically -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Add data dynamically -->
+        </tbody>
+      </table>
+    </div>
+    <script>
+      $(document).ready(function () {
+        // Load the CSV file
+        $.get("static/cost_table.csv", function (data) {
+          const lines = data.split("\n");
+          const headers = lines[0].split(",");
+
+          // Populate table headers
+          let theadHtml = "";
+          headers.forEach((header) => {
+            theadHtml += `<th>${header}</th>`;
+          });
+          $("#pivotTable thead tr").html(theadHtml);
+
+          // Populate table rows
+          let tbodyHtml = "";
+          for (let i = 1; i < lines.length; i++) {
+            const row = lines[i].split(",");
+            if (row.length > 1) {
+              tbodyHtml += "<tr>";
+              row.forEach((cell) => {
+                tbodyHtml += `<td>${cell}</td>`;
+              });
+              tbodyHtml += "</tr>";
+            }
+          }
+          $("#pivotTable tbody").html(tbodyHtml);
+
+          // Initialize DataTables
+          $("#pivotTable").DataTable();
+        });
+      });
+    </script>
+  </body>
+</html>

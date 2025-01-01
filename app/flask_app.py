@@ -32,6 +32,10 @@ def get_performance_data():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/finances')
+def finances():
+    return render_template('finances.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

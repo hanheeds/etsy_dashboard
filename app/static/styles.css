@@ -4,6 +4,25 @@ body {
     margin-top: 50px;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+header img {
+  height: 50px; /* Adjust the size of your logo */
+  margin-right: 15px;
+}
+header nav a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #007bff;
+}
+header nav a:hover {
+  text-decoration: underline;
+}
+
 h1 {
     color: blue;
 }
