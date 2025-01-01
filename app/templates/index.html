@@ -15,7 +15,13 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   </head>
   <body>
-    <h1 id="header">DTC Etsy Dashboard</h1>
+    <header>
+      <h1 id="header">DTC Etsy Dashboard</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/other-page">Finances</a>
+      </nav>
+    </header>
     <p id="updatedDate">Updated <span id="currentDate"></span></p>
 
     <div id="performance-tables">
@@ -27,8 +33,5 @@
         </tbody>
       </table>
     </div>
-
-    <!-- Include the custom JavaScript for fetching and visualizing data -->
-    <!-- <script src="../static/graph.js"></script> -->
   </body>
 </html>

@@ -1,1 +1,2 @@
-Order ID,Shop ID,First Name,Last Name,Email,Address,City,Region,Country,ZIP Code,Total Price,Total Shipping,Status,Created At,Line Items
+Order ID,App Order ID,Shop ID,First Name,Last Name,Email,Address,City,Region,Country,ZIP Code,Total Price,Total Shipping,Status,Created At,Line Items
+676c3c6c6fe42007a5083044,13297310.1,13297310,Hank,Yang,hankyang22@gmail.com,474C Laurel Brook Dr,Brick,NJ,United States,08724,0,0,canceled,2024-12-25 17:10:04+00:00,"AS Colour Relaxed Hoodie Embroidery Test (Qty: 1, Variant: L / Powder)"
